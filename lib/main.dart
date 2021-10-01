@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Inicio Tienda',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginScreen(),
     );
   }
 }
