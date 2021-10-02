@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:blunder_store_app/constants.dart';
 
 class SearchBar extends StatelessWidget {
   const SearchBar({
@@ -17,6 +18,7 @@ class SearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(29.5),
       ),
       child: TextField(
+        style: TextStyle(color: fondoDark),
         decoration: InputDecoration(
           hintText: "Buscar...",
           icon: SvgPicture.asset("assets/icons/search.svg"),
