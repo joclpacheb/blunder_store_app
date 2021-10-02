@@ -1,10 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
+import 'package:blunder_store_app/screens/main_shop.dart';
 
-// ignore: use_key_in_widget_constructors
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -131,7 +131,16 @@ class _LoginScreenState extends State<LoginScreen> {
       height: 100,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () => {
+          print('Login Button Pressed'),
+          //aqui va la validación con la API para el login
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return MainShop();
+            }),
+          ),
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -178,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-//================================================
+//=============================================================================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
