@@ -112,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Padding(
         padding: EdgeInsets.only(right: 0.0),
         child: TextButton(
+          // ignore: avoid_print
           onPressed: () => print('Forgot Password Button Pressed'),
           child: Text('¿Olvidaste la contraseña?',
               style: TextStyle(
