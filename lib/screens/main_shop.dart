@@ -5,7 +5,7 @@ import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/widgets/search_bar.dart';
 //import 'package:blunder_store_app/widgets/category_card.dart';
 //import 'package:blunder_store_app/widgets/bottom_nav_bar.dart';
-//import 'package:blunder_store_app/screens/details_screen.dart';
+import 'package:blunder_store_app/screens/details_screen.dart';
 
 class MainShop extends StatelessWidget {
   @override
@@ -159,38 +159,10 @@ class HomeScreen extends StatelessWidget {
                             )),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(),
                     ),
-                    SizedBox(
-                      height: 150.0,
-                      child: ListView.builder(
-                        itemCount: 4,
-                        physics: ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => Container(
-                          height: 200.0,
-                          width: 200.0,
-                          margin: EdgeInsets.all(10.0),
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.amber,
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Card $index",
-                              style: TextStyle(
-                                color: fondoDark,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 )),
           ),
