@@ -1,11 +1,12 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unused_field, prefer_final_fields
 
 import 'package:flutter/material.dart';
 import 'package:blunder_store_app/constants.dart';
-import 'package:blunder_store_app/widgets/search_bar.dart';
 //import 'package:blunder_store_app/widgets/category_card.dart';
-import 'package:blunder_store_app/widgets/bottom_nav_bar.dart';
+//import 'package:blunder_store_app/widgets/bottom_nav_bar.dart';
 //import 'package:blunder_store_app/screens/details_screen.dart';
+import 'package:blunder_store_app/screens/shop.dart';
+import 'package:blunder_store_app/screens/orders.dart';
 
 class MainShop extends StatefulWidget {
   @override
@@ -35,6 +36,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _paginaActual = 0;
+
+  List<Widget> _paginas = [
+    ShopScreen(),
+    Orders(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -107,78 +113,45 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    // Here the height of the container is 45% of our total height
-                    height: size.height * .15,
-                    decoration: BoxDecoration(
-                      color: Color(0xff313131),
-                    ),
-                  ),
-                  SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SearchBar(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+        body: _paginas[_paginaActual],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) {
+            setState(() {
+              _paginaActual = index;
+            });
+          },
+          currentIndex: _paginaActual,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          iconSize: 30.0,
+          backgroundColor: fondoDark,
+          selectedItemColor: primaryGreen,
+          unselectedItemColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
               ),
+              label: "Inicio",
+              backgroundColor: fondoDark,
             ),
-            Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
-                      topRight: Radius.circular(25.0),
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(25.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Destacados",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 30.0,
-                              color: fondoDark,
-                            ),
-                          ),
-                          Text('Ver todos',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 14,
-                                color: fondoDark,
-                                fontWeight: FontWeight.w400,
-                              )),
-                        ],
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(),
-                      ),
-                    ],
-                  )),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag),
+              label: "Pedidos",
+              backgroundColor: fondoDark,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.videogame_asset),
+              label: "Canjear Puntos",
+              backgroundColor: fondoDark,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: "Carrito",
+              backgroundColor: fondoDark,
             ),
           ],
-        ),
-        bottomNavigationBar: BottomNavBar());
+        ));
   }
 }
