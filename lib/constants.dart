@@ -34,3 +34,4 @@ const kBlueColor = Color(0xFF817DC0);
 const kShadowColor = Color(0xFFE6E6E6);
 const fondoDark = Color(0xFF313131);
 const primaryGreen = Color(0xFF009c8a);
+const moradoBlunder = Color(0xFF693c72);

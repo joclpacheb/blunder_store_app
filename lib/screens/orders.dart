@@ -24,7 +24,8 @@ class Orders extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
+        SingleChildScrollView(
+          //esto era un expanded antes, se cambió a single child scroll view por el responsive, pero ahora sale una barra negra abajo...
           child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -33,23 +34,59 @@ class Orders extends StatelessWidget {
                   topRight: Radius.circular(25.0),
                 ),
               ),
-              padding: const EdgeInsets.all(35.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 // mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Image.asset(
+                    'assets/images/cyborg-bull.png',
+                    fit: BoxFit.contain,
+                    height: 50,
+                  ),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      "¡Disfruta todas las opciones que Blunder Store trae para ti!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0,
-                        color: fondoDark,
-                      ),
-                    ),
+                    child: DefaultTabController(
+                        length: 2, // length of tabs
+                        initialIndex: 0,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              TabBar(
+                                labelStyle: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                labelColor: fondoDark,
+                                unselectedLabelColor: primaryGreen,
+                                indicatorColor: primaryGreen,
+                                tabs: [
+                                  Tab(
+                                    text: 'Pendientes',
+                                  ),
+                                  Tab(text: 'Historial'),
+                                ],
+                              ),
+                              Container(
+                                  height: 300, //height of TabBarView
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          top: BorderSide(
+                                              color: Colors.grey, width: 0.5))),
+                                  child: TabBarView(children: <Widget>[
+                                    Center(
+                                      child: Text('Pendientes',
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Center(
+                                      child: Text('Historial',
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ]))
+                            ])),
                   ),
                 ],
               )),

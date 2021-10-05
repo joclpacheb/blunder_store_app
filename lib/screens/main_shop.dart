@@ -7,6 +7,7 @@ import 'package:blunder_store_app/constants.dart';
 //import 'package:blunder_store_app/screens/details_screen.dart';
 import 'package:blunder_store_app/screens/shop.dart';
 import 'package:blunder_store_app/screens/orders.dart';
+import 'package:blunder_store_app/screens/gamified_store.dart';
 
 class MainShop extends StatefulWidget {
   @override
@@ -37,10 +38,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _paginaActual = 0;
 
-  List<Widget> _paginas = [
-    ShopScreen(),
-    Orders(),
-  ];
+  List<Widget> _paginas = [ShopScreen(), Orders(), GamifiedStore()];
 
   @override
   Widget build(BuildContext context) {
