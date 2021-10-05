@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unused_field, prefer_final_fields
 
+import 'package:blunder_store_app/screens/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:blunder_store_app/constants.dart';
 //import 'package:blunder_store_app/widgets/category_card.dart';
@@ -38,7 +39,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _paginaActual = 0;
 
-  List<Widget> _paginas = [ShopScreen(), Orders(), GamifiedStore()];
+  List<Widget> _paginas = [
+    ShopScreen(),
+    Orders(),
+    GamifiedStore(),
+    CartScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
