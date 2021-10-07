@@ -2,6 +2,7 @@
 
 import 'package:blunder_store_app/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:blunder_store_app/widgets/home_page.dart';
 
 void main() => runApp(Ruleta());
 
@@ -51,9 +52,9 @@ class Ruleta extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            child: Text(
-              'Aquí va la ruleta',
-              style: TextStyle(color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: RuletaW(),
             ),
           ),
         ),
