@@ -24,7 +24,8 @@ class _MainShopState extends State<MainShop> {
       theme: ThemeData(
         fontFamily: "Cairo",
         scaffoldBackgroundColor: kBackgroundColor,
-        textTheme: Theme.of(context).textTheme.apply(displayColor: kTextColor),
+        textTheme:
+            Theme.of(context).textTheme.apply(displayColor: blancoBlunder),
       ),
       home: HomeScreen(),
     );

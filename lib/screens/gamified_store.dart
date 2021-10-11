@@ -100,7 +100,6 @@ class SpinTheWheelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     final headline6 = themeData.textTheme.headline6;
-
     return Expanded(
       child: Card(
         elevation: 10,
