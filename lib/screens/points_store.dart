@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:blunder_store_app/constants.dart';
+import 'package:blunder_store_app/screens/how_to_win_points.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -101,7 +102,14 @@ class Canjeo extends StatelessWidget {
                                 iconSize: 20,
                                 splashRadius: 40,
                                 disabledColor: blancoBlunder,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return WinPoints();
+                                    }),
+                                  );
+                                },
                                 tooltip: "¿Cómo obtener puntos?",
                               ),
                               decoration: ShapeDecoration(
@@ -120,135 +128,147 @@ class Canjeo extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                      color: rojoBlunder,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25.0),
-                        topRight: Radius.circular(25.0),
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(25.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            IntrinsicWidth(
-                              child: Container(
-                                height: 140.0,
-                                width: 400.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15.0),
+              child: Stack(children: [
+                DraggableScrollableSheet(
+                    initialChildSize: 1,
+                    minChildSize: 0.2,
+                    maxChildSize: 1,
+                    builder: (BuildContext context,
+                        ScrollController scrollController) {
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                        child: Container(
+                          child: ListView.builder(
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              if (index == 0) {}
+                              return Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: BlunderItemCard(),
                                   ),
-                                ),
-                                padding: const EdgeInsets.all(15.0),
-                                child: Container(
-                                  height: 100,
-                                  color: Colors.white,
-                                  child: Row(
-                                    children: [
-                                      Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(1),
-                                          child: Expanded(
-                                            child: Image.asset(
-                                                "assets/images/zapato.png"),
-                                            flex: 2,
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          alignment: Alignment.topLeft,
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                flex: 5,
-                                                child: ListTile(
-                                                  title: Text(
-                                                    "Zapato Blunder",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 6,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    OutlinedButton.icon(
-                                                      style: OutlinedButton.styleFrom(
-                                                          primary: fondoDark,
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  20),
-                                                          side: BorderSide(
-                                                              width: 2.0,
-                                                              color:
-                                                                  rojoBlunder),
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20.0))),
-                                                      onPressed: () {
-                                                        showAlertDialog(
-                                                            context);
-                                                      },
-                                                      icon: Image.asset(
-                                                        'assets/images/diamond.png',
-                                                        height: 25,
-                                                      ),
-                                                      label: Text(
-                                                        "15000",
-                                                        style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 8,
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        flex: 8,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                ],
+                              );
+                            },
+                          ),
+                          decoration: BoxDecoration(
+                            color: rojoBlunder,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25.0),
+                              topRight: Radius.circular(25.0),
                             ),
-                          ],
+                          ),
                         ),
-                      ],
-                    )),
-              ),
+                      );
+                    }),
+              ]),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class BlunderItemCard extends StatelessWidget {
+  const BlunderItemCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          height: 140.0,
+          width: 370.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(15.0),
+            ),
+          ),
+          padding: const EdgeInsets.all(15.0),
+          child: Container(
+            height: 100,
+            color: Colors.white,
+            child: Row(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(1),
+                    child: Expanded(
+                      child: Image.asset("assets/images/zapato.png"),
+                      flex: 2,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: ListTile(
+                            title: Text(
+                              "Zapato Blunder",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 12,
+                              ),
+                              OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                    primary: fondoDark,
+                                    padding: EdgeInsets.all(20),
+                                    side: BorderSide(
+                                        width: 2.0, color: rojoBlunder),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0))),
+                                onPressed: () {
+                                  showAlertDialog(context);
+                                },
+                                icon: Image.asset(
+                                  'assets/images/diamond.png',
+                                  height: 25,
+                                ),
+                                label: Text(
+                                  "15000",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  flex: 8,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
