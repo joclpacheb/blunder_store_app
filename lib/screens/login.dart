@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/screens/main_shop.dart';
+import 'package:blunder_store_app/screens/register.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -115,6 +116,33 @@ class _LoginScreenState extends State<LoginScreen> {
           // ignore: avoid_print
           onPressed: () => print('Forgot Password Button Pressed'),
           child: Text('¿Olvidaste la contraseña?',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'OpenSans',
+              )),
+        ),
+      ),
+    );
+  }
+  Widget _buildRegisterBtn() {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: EdgeInsets.only(right: 0.0),
+        child: TextButton(
+          // ignore: avoid_print
+          onPressed: () => {
+          print(' Button register Pressed'),
+          //aqui va la validación con la API para el login
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return RegisterScreen();
+            }),
+          ),
+        },
+          child: Text('Registrate',
               style: TextStyle(
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,
@@ -280,9 +308,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         _buildPasswordTF(),
                         _buildForgotPasswordBtn(),
+                        _buildRegisterBtn(),
                         _buildRememberMeCheckbox(),
                         _buildLoginBtn(),
-
                         //_buildSignInWithText(),
                         //_buildSocialBtnRow(),
                         //_buildSignupBtn(),
