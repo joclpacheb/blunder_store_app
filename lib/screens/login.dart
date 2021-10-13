@@ -260,7 +260,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        // ignore: prefer_const_constructors
                         SizedBox(
                           height: 5.0,
                         ),

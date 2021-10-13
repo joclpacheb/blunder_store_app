@@ -48,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context)
-        .size; //this gonna give us total height and width of our device
+    // var size = MediaQuery.of(context)
+    //   .size; //this gonna give us total height and width of our device
     return Scaffold(
         backgroundColor: Color(0xff313131),
         appBar: PreferredSize(

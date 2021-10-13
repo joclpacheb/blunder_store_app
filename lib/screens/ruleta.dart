@@ -51,11 +51,9 @@ class Ruleta extends StatelessWidget {
           ],
         ),
         body: Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: RuletaW(),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: RuletaW(),
           ),
         ),
       ),

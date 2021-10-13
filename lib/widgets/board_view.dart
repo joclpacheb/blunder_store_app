@@ -40,7 +40,7 @@ class _BoardViewState extends State<BoardView> {
           width: size.width,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: [BoxShadow(blurRadius: 20, color: Colors.black38)]),
+              boxShadow: const [BoxShadow(blurRadius: 20, color: Colors.black38)]),
         ),
         Transform.rotate(
           angle: -(widget.current + widget.angle) * 2 * pi,
@@ -52,7 +52,7 @@ class _BoardViewState extends State<BoardView> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: size.height,
           width: size.width,
           child: ArrowView(),

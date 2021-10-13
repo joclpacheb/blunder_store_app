@@ -3,6 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/widgets/search_bar.dart';
+import 'package:blunder_store_app/components/product_card.dart';
+import 'package:blunder_store_app/models/Product.dart';
+
+//import '../size_config.dart';
+//import 'package:blunder_store_app/screens/home/components/section_title.dart';
+
+import 'package:blunder_store_app/widgets/category_card.dart';
+import 'package:blunder_store_app/screens/details_screen.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({Key? key}) : super(key: key);
@@ -72,9 +80,53 @@ class ShopScreen extends StatelessWidget {
                           )),
                     ],
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(),
+                  Expanded(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        CategoryCard(
+                          title: "Comidas",
+                          svgSrc: "assets/icons/Hamburger.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return DetailsScreen();
+                              }),
+                            );
+                          },
+                        ),
+                        CategoryCard(
+                          title: "Deporte",
+                          svgSrc: "assets/icons/Excercises.svg",
+                          press: () {},
+                        ),
+                        CategoryCard(
+                          title: "Meditación",
+                          svgSrc: "assets/icons/Meditation.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return DetailsScreen();
+                              }),
+                            );
+                          },
+                        ),
+                        CategoryCard(
+                          title: "Yoga",
+                          svgSrc: "assets/icons/yoga.svg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return DetailsScreen();
+                              }),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               )),
