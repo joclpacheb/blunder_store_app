@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:blunder_store_app/widgets/blunder_item_card.dart';
 
 void main() => runApp(Canjeo());
 
@@ -146,7 +147,11 @@ class Canjeo extends StatelessWidget {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: BlunderItemCard(),
+                                    child: BlunderItemCard(
+                                      imagen: 'zapato',
+                                      nombre: 'Zapato Blunder',
+                                      precio: 1500,
+                                    ),
                                   ),
                                 ],
                               );
@@ -169,159 +174,4 @@ class Canjeo extends StatelessWidget {
       ),
     );
   }
-}
-
-class BlunderItemCard extends StatelessWidget {
-  const BlunderItemCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          height: 140.0,
-          width: 370.0,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(15.0),
-            ),
-          ),
-          padding: const EdgeInsets.all(15.0),
-          child: Container(
-            height: 100,
-            color: Colors.white,
-            child: Row(
-              children: [
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(1),
-                    child: Expanded(
-                      child: Image.asset("assets/images/zapato.png"),
-                      flex: 2,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 5,
-                          child: ListTile(
-                            title: Text(
-                              "Zapato Blunder",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 6,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 12,
-                              ),
-                              OutlinedButton.icon(
-                                style: OutlinedButton.styleFrom(
-                                    primary: fondoDark,
-                                    padding: EdgeInsets.all(20),
-                                    side: BorderSide(
-                                        width: 2.0, color: rojoBlunder),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0))),
-                                onPressed: () {
-                                  showAlertDialog(context);
-                                },
-                                icon: Image.asset(
-                                  'assets/images/diamond.png',
-                                  height: 25,
-                                ),
-                                label: Text(
-                                  "15000",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  flex: 8,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-showAlertDialog(BuildContext context) {
-  Widget continueButton = TextButton(
-      child: Text("Si".toUpperCase(),
-          style: TextStyle(fontSize: 14, color: Colors.white)),
-      style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(25)),
-          backgroundColor: MaterialStateProperty.all<Color>(primaryGreen),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  side: BorderSide(color: primaryGreen)))),
-      onPressed: () =>
-          Navigator.of(context, rootNavigator: true).pop('dialog'));
-
-  AlertDialog alert = AlertDialog(
-    content: Padding(
-      padding: const EdgeInsets.all(28.0),
-      child: Text(
-        "¿Deseas canjear tus puntos por este articulo?",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: fondoDark,
-        ),
-      ),
-    ),
-    actions: [
-      TextButton(
-          child: Text("no".toUpperCase(),
-              style: TextStyle(fontSize: 14, color: Colors.white)),
-          style: ButtonStyle(
-              padding:
-                  MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(25)),
-              foregroundColor: MaterialStateProperty.all<Color>(rojoBlunder),
-              backgroundColor: MaterialStateProperty.all<Color>(rojoBlunder),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: rojoBlunder)))),
-          onPressed: () => {
-                Navigator.of(context, rootNavigator: true).pop('dialog')
-                //aquí se hace el post del rest api
-              }),
-      continueButton,
-    ],
-  );
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }
