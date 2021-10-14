@@ -130,7 +130,7 @@ class SpinTheWheelCard extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 80),
                 Expanded(
                   child: Text(
                     'Prueba tu suerte en la Ruleta del Merodeador',

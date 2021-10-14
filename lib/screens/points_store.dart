@@ -140,6 +140,7 @@ class Canjeo extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                         child: Container(
                           child: ListView.builder(
+                            //el list view debería ser alimentado por la API
                             itemCount: 10,
                             itemBuilder: (context, index) {
                               if (index == 0) {}
