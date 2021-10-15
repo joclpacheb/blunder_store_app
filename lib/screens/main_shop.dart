@@ -54,9 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         backgroundColor: Color(0xff313131),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0),
+          preferredSize: Size.fromHeight(75.0),
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
             child: AppBar(
               backgroundColor: Color(0xff313131),
               primary:
