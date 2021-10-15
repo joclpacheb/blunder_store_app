@@ -77,11 +77,8 @@ final kBoxDecorationStyle = BoxDecoration(
 
 const kBackgroundColor = Color(0xFFF8F8F8);
 const kActiveIconColor = Color(0xFFE68342);
-<<<<<<< HEAD
 //const kTextColor = Color(0xFFF8F8F8);
-=======
 const blancoBlunder = Color(0xFFe7e7e7);
->>>>>>> origin/master
 const kBlueLightColor = Color(0xFFC7B8F5);
 const kBlueColor = Color(0xFF817DC0);
 const kShadowColor = Color(0xFFE6E6E6);
