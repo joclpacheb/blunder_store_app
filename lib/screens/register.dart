@@ -1,7 +1,14 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
+import 'package:blunder_store_app/api.dart';
+
+
+
+
 
 class RegisterScreen extends StatefulWidget {
 
@@ -11,8 +18,15 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _rememberMe = false;
+  final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final userTypeController = TextEditingController();
+  final passwordController = TextEditingController();
+  late Future<bool> value;
 
-  Widget buildEmailTF() {
+  Widget buildEmailTF(controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -22,6 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 40.0,
           child: TextField(
+            controller: controller,
             keyboardType: TextInputType.emailAddress,
             style: const TextStyle(
               color: Color(0xFFB8B8B8),
@@ -43,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildEntryTF(String texto) {
+  Widget _buildEntryTF(String texto, controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -53,7 +68,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 40.0,
           child: TextField(
-            keyboardType: TextInputType.emailAddress,
+            controller:  controller,
+            keyboardType: TextInputType.text,
             style: const TextStyle(
               color: Color(0xFFB8B8B8),
               fontFamily: 'OpenSans',
@@ -96,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildPasswordTF() {
+  Widget _buildPasswordTF(controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -106,6 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 40.0,
           child: TextField(
+            controller: controller,
             obscureText: true,
             style: TextStyle(
               color: Color(0xFFB8B8B8),
@@ -139,14 +156,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () => {
-          print('Login Button Pressed'),
-          //aqui va la validación con la API para el login
-          /*Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return MainShop();
-            }),
-          ),*/
+          if(emailController.text != "" && phoneController.text  != "" && nameController.text != "" && 
+          lastNameController.text != "" && passwordController.text != "" && userTypeController.text != "" ){
+            value = createUser(emailController.text,  phoneController.text, nameController.text, 
+                   lastNameController.text, passwordController.text, userTypeController.text),
+            
+            FutureBuilder(
+              future: value, 
+              builder:(context, snapshot){
+                if(snapshot.hasData){
+                  print("creado");
+                  return Text("creado");
+                }else if (snapshot.hasError){
+                  print("error");
+                  return Text("error");
+                }
+                return Text("funciona");
+              } 
+            )
+          }else
+            print("jdklasfjkdsjfkl")
+          
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -253,12 +283,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: 5.0),
-                        _buildEntryTF("Nombres"),
-                        _buildEntryTF("Apellidos"),
-                        _buildEntryTF("Nombres"),
-                        buildEmailTF(),
-                        _buildEntryTF("Teléfono"),
-                        _buildPasswordTF(),
+                        _buildEntryTF("Nombres", nameController),
+                        _buildEntryTF("Apellidos", lastNameController),
+                        _buildEntryTF("UserType", userTypeController),
+                        buildEmailTF(emailController),
+                        _buildEntryTF("Teléfono", phoneController),
+                        _buildPasswordTF(passwordController),
                         
                         _buildRegisterBtn(),
                         //_buildSignInWithText(),
