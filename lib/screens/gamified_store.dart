@@ -45,9 +45,10 @@ class GamifiedStore extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40.0),
                           child: Text(
                             "¡Disfruta todas las opciones que Blunder Store trae para ti!",
                             textAlign: TextAlign.center,

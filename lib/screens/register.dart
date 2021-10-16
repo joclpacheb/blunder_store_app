@@ -1,17 +1,15 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 import 'dart:html';
+import 'dart:js';
 
+import 'package:blunder_store_app/screens/forgot_password.dart';
+import 'package:blunder_store_app/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/api.dart';
 
-
-
-
-
 class RegisterScreen extends StatefulWidget {
-
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -49,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Icons.email,
                 color: Color(0xFFB5B5B5),
               ),
-              hintText: 'Enter your Email',
+              hintText: 'Escribe tu email',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -68,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 40.0,
           child: TextField(
-            controller:  controller,
+            controller: controller,
             keyboardType: TextInputType.text,
             style: const TextStyle(
               color: Color(0xFFB8B8B8),
@@ -90,9 +88,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Widget _buildNombreApellido(
+      String texto_n, controller_n, texto_a, controller_a) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 10.0),
+        Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: kBoxDecorationStyle,
+                  height: 40.0,
+                  child: TextField(
+                    controller: controller_n,
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(
+                      color: Color(0xFFB8B8B8),
+                      fontFamily: 'OpenSans',
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.only(top: 10.0),
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: Color(0xFFB5B5B5),
+                      ),
+                      hintText: texto_n,
+                      hintStyle: kHintTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: kBoxDecorationStyle,
+                  height: 40.0,
+                  child: TextField(
+                    controller: controller_a,
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(
+                      color: Color(0xFFB8B8B8),
+                      fontFamily: 'OpenSans',
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.only(top: 10.0),
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: Color(0xFFB5B5B5),
+                      ),
+                      hintText: texto_a,
+                      hintStyle: kHintTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildLogo() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -105,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 100,
                 fit: BoxFit.cover,
               ),
-            ), 
+            ),
           ),
         ],
       ),
@@ -135,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Icons.lock,
                 color: Color(0xFFB5B5B5),
               ),
-              hintText: 'Enter your Password',
+              hintText: 'Escribe tu contraseña',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -144,39 +214,74 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
-
-
+  Widget _buildConfirmPasswordTF(controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 40.0,
+          child: TextField(
+            controller: controller,
+            obscureText: true,
+            style: TextStyle(
+              color: Color(0xFFB8B8B8),
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 10.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Color(0xFFB5B5B5),
+              ),
+              hintText: 'Confirma tu contraseña',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _buildRegisterBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0),
       width: 200,
-      height: 100,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () => {
-          if(emailController.text != "" && phoneController.text  != "" && nameController.text != "" && 
-          lastNameController.text != "" && passwordController.text != "" && userTypeController.text != "" ){
-            value = createUser(emailController.text,  phoneController.text, nameController.text, 
-                   lastNameController.text, passwordController.text, userTypeController.text),
-            
-            FutureBuilder(
-              future: value, 
-              builder:(context, snapshot){
-                if(snapshot.hasData){
-                  print("creado");
-                  return Text("creado");
-                }else if (snapshot.hasError){
-                  print("error");
-                  return Text("error");
-                }
-                return Text("funciona");
-              } 
-            )
-          }else
+          if (emailController.text != "" &&
+              phoneController.text != "" &&
+              nameController.text != "" &&
+              lastNameController.text != "" &&
+              passwordController.text != "" &&
+              userTypeController.text != "")
+            {
+              value = createUser(
+                  emailController.text,
+                  phoneController.text,
+                  nameController.text,
+                  lastNameController.text,
+                  passwordController.text,
+                  userTypeController.text),
+              FutureBuilder(
+                  future: value,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print("creado");
+                      return Text("creado");
+                    } else if (snapshot.hasError) {
+                      print("error");
+                      return Text("error");
+                    }
+                    return Text("funciona");
+                  })
+            }
+          else
             print("jdklasfjkdsjfkl")
-          
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -242,11 +347,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               _buildLogo(),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 150, 0, 20),
+                  padding: const EdgeInsets.fromLTRB(0, 140, 0, 00),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     margin: const EdgeInsets.symmetric(horizontal: 25.0),
-                    width: 500,
                     decoration: const BoxDecoration(
                       color: Color(
                         0xffffffff,
@@ -278,19 +382,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'OpenSans',
-                            fontSize: 28.0,
+                            fontSize: 25.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(height: 5.0),
-                        _buildEntryTF("Nombres", nameController),
-                        _buildEntryTF("Apellidos", lastNameController),
-                        _buildEntryTF("UserType", userTypeController),
+                        _buildNombreApellido("Nombres", nameController,
+                            "Apellidos", lastNameController),
+
+                        // _buildEntryTF("UserType", userTypeController),
                         buildEmailTF(emailController),
-                        _buildEntryTF("Teléfono", phoneController),
+                        _buildEntryTF("Escribe tu Teléfono", phoneController),
                         _buildPasswordTF(passwordController),
-                        
+                        _buildConfirmPasswordTF(passwordController),
                         _buildRegisterBtn(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildForgotPasswordBtn(context),
+                            _buildLoginBtn(context),
+                          ],
+                        ),
+
                         //_buildSignInWithText(),
                         //_buildSocialBtnRow(),
                         //_buildSignupBtn(),
@@ -317,4 +430,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+}
+
+Widget _buildForgotPasswordBtn(context) {
+  return Container(
+    alignment: Alignment.centerRight,
+    child: Padding(
+      padding: EdgeInsets.only(right: 0.0),
+      child: TextButton(
+        // ignore: avoid_print
+        onPressed: () => {
+          print('Forgot Button Pressed'),
+          //aqui va la validación con la API para el login
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return forgotScreen();
+            }),
+          ),
+        },
+        child: Text('¿Olvidaste la contraseña?',
+            style: TextStyle(
+              color: fondoDark,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'OpenSans',
+            )),
+      ),
+    ),
+  );
+}
+
+Widget _buildLoginBtn(context) {
+  return Container(
+    alignment: Alignment.centerRight,
+    child: Padding(
+      padding: EdgeInsets.only(right: 0.0),
+      child: TextButton(
+        // ignore: avoid_print
+        onPressed: () => {
+          print('Login Button Pressed'),
+          //aqui va la validación con la API para el login
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return LoginScreen();
+            }),
+          ),
+        },
+        child: Text('| Iniciar Sesión',
+            style: TextStyle(
+              color: fondoDark,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'OpenSans',
+            )),
+      ),
+    ),
+  );
 }

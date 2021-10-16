@@ -24,7 +24,7 @@ class Orders extends StatelessWidget {
             ],
           ),
         ),
-        SingleChildScrollView(
+        Expanded(
           //esto era un expanded antes, se cambió a single child scroll view por el responsive, pero ahora sale una barra negra abajo...
           child: Container(
               decoration: BoxDecoration(

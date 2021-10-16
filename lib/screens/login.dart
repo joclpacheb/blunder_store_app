@@ -6,6 +6,8 @@ import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/screens/main_shop.dart';
 import 'package:blunder_store_app/screens/register.dart';
 
+import 'forgot_password.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -40,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.email,
                 color: Color(0xFFB5B5B5),
               ),
-              hintText: 'Enter your Email',
+              hintText: 'Escribe aquí tu email',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -98,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.lock,
                 color: Color(0xFFB5B5B5),
               ),
-              hintText: 'Enter your Password',
+              hintText: 'Escribe aquí tu contraseña',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -114,17 +116,27 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.only(right: 0.0),
         child: TextButton(
           // ignore: avoid_print
-          onPressed: () => print('Forgot Password Button Pressed'),
+          onPressed: () => {
+            print('Forgot Button Pressed'),
+            //aqui va la validación con la API para el login
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return forgotScreen();
+              }),
+            ),
+          },
           child: Text('¿Olvidaste la contraseña?',
               style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
+                color: fondoDark,
+                fontWeight: FontWeight.w500,
                 fontFamily: 'OpenSans',
               )),
         ),
       ),
     );
   }
+
   Widget _buildRegisterBtn() {
     return Container(
       alignment: Alignment.centerRight,
@@ -133,19 +145,19 @@ class _LoginScreenState extends State<LoginScreen> {
         child: TextButton(
           // ignore: avoid_print
           onPressed: () => {
-          print(' Button register Pressed'),
-          //aqui va la validación con la API para el login
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return RegisterScreen();
-            }),
-          ),
-        },
-          child: Text('Registrate',
+            print(' Button register Pressed'),
+            //aqui va la validación con la API para el login
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return RegisterScreen();
+              }),
+            ),
+          },
+          child: Text('|    Registrate',
               style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
+                color: fondoDark,
+                fontWeight: FontWeight.w500,
                 fontFamily: 'OpenSans',
               )),
         ),
@@ -191,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildRememberMeCheckbox() {
     return SizedBox(
-      height: 20.0,
+      height: 15.0,
       child: Row(
         children: <Widget>[
           Theme(
@@ -303,16 +315,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 5.0),
                         buildEmailTF(),
                         SizedBox(
-                          height: 25.0,
+                          height: 10.0,
                         ),
                         _buildPasswordTF(),
-                        _buildForgotPasswordBtn(),
-                        _buildRegisterBtn(),
+                        SizedBox(
+                          height: 15.0,
+                        ),
                         _buildRememberMeCheckbox(),
                         _buildLoginBtn(),
-                        //_buildSignInWithText(),
-                        //_buildSocialBtnRow(),
-                        //_buildSignupBtn(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildForgotPasswordBtn(),
+                            _buildRegisterBtn(),
+                          ],
+                        ),
                       ],
                     ),
                   ),
