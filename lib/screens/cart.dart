@@ -65,6 +65,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             Expanded(
+              flex: 3,
               child: Stack(children: [
                 DraggableScrollableSheet(
                     initialChildSize: 1,
@@ -78,7 +79,6 @@ class CartScreen extends StatelessWidget {
                           child: ListView.builder(
                             //el list view debería ser alimentado por la API
                             itemCount: 10,
-
                             itemBuilder: (context, index) {
                               if (index == 0) {}
                               return Column(
