@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:blunder_store_app/constants.dart';
 
-class CategoryCard extends StatelessWidget {
+class BlunderCategoryCard extends StatelessWidget {
   final String svgSrc;
   final String title;
   final Function press;
 
-  const CategoryCard({
+  const BlunderCategoryCard({
     Key? key,
     required this.svgSrc,
     required this.title,

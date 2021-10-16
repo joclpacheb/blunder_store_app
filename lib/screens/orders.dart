@@ -61,7 +61,7 @@ class Orders extends StatelessWidget {
                                 indicatorColor: primaryGreen,
                                 tabs: [
                                   Tab(
-                                    text: 'Pendientes',
+                                    text: 'Pedidos Pendientes',
                                   ),
                                   Tab(text: 'Historial'),
                                 ],

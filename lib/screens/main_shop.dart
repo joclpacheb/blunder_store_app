@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _paginaActual = 0;
 
   List<Widget> _paginas = [
-    ShopScreen(),
+    ShopScreen(
+      title: 'hola',
+    ),
     Orders(),
     GamifiedStore(),
     CartScreen()
