@@ -24,8 +24,8 @@ class BoardView extends StatefulWidget {
 }
 
 class _BoardViewState extends State<BoardView> {
-  Size get size => Size(MediaQuery.of(context).size.width * 0.8,
-      MediaQuery.of(context).size.width * 0.8);
+  Size get size => Size(MediaQuery.of(context).size.width * 0.6,
+      MediaQuery.of(context).size.width * 0.6);
 
   double _rotote(int index) => (index / widget.items.length) * 2 * pi;
 
@@ -38,9 +38,9 @@ class _BoardViewState extends State<BoardView> {
         Container(
           height: size.height,
           width: size.width,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: const [BoxShadow(blurRadius: 20, color: Colors.black38)]),
+          decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: const [
+            BoxShadow(blurRadius: 20, color: Colors.black38)
+          ]),
         ),
         Transform.rotate(
           angle: -(widget.current + widget.angle) * 2 * pi,

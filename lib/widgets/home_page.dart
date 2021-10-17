@@ -55,13 +55,33 @@ class _RuletaState extends State<RuletaW> with SingleTickerProviderStateMixin {
                 alignment: Alignment.center,
                 children: <Widget>[
                   BoardView(items: _items, current: _current, angle: _angle),
+                  _buildText(
+                      "¡Prueba tu suerte! Gira la ruleta y gana premios y descuentos en la tienda."),
                   _buildGo(),
-                  _buildResult(_value),
+                  // _buildResult(_value),
+                  _buildTitle(),
+                  _buildBottomW(_value),
                 ],
               );
             }),
       ),
     );
+  }
+
+  _buildText(String texto) {
+    return Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30, right: 40, left: 40),
+          child: Text(
+            texto,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+            ),
+          ),
+        ));
   }
 
   _buildGo() {
@@ -75,8 +95,9 @@ class _RuletaState extends State<RuletaW> with SingleTickerProviderStateMixin {
           height: 72,
           width: 72,
           child: Text(
-            "GO",
-            style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+            "Presiona para Girar",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
           ),
         ),
         onTap: _animation,
@@ -96,20 +117,114 @@ class _RuletaState extends State<RuletaW> with SingleTickerProviderStateMixin {
     }
   }
 
-  int _calIndex(value) {
-    var _base = (2 * pi / _items.length / 2) / (2 * pi);
-    return (((_base + value) % 1) * _items.length).floor();
+  _buildTitle() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 40.0),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Column(
+          children: [
+            Text(
+              "Ruleta del Merodeador",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  _buildResult(_value) {
+  _buildBottomW(_value) {
     var _index = _calIndex(_value * _angle + _current);
     String _asset = _items[_index].asset;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.only(bottom: 15.0),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Image.asset(_asset, height: 80, width: 80),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0, top: 30),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Resultado:",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image.asset(_asset, height: 80, width: 80),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0, top: 30),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 14.0, left: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Costo:   ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
+                              primary: fondoDark,
+                              padding: EdgeInsets.all(20),
+                              side: BorderSide(width: 2.0, color: rojoBlunder),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                          onPressed: null,
+                          icon: Image.asset(
+                            'assets/images/diamond.png',
+                            height: 25,
+                          ),
+                          label: Text(
+                            '200',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  int _calIndex(value) {
+    var _base = (2 * pi / _items.length / 2) / (2 * pi);
+    return (((_base + value) % 1) * _items.length).floor();
   }
 }

@@ -6,7 +6,6 @@ import 'package:blunder_store_app/widgets/home_page.dart';
 
 void main() => runApp(Ruleta());
 
-//TO DO: implementar ruleta y app bar con willpopback arrow button https://medium.com/@iamatul_k/flutter-handle-back-button-in-a-flutter-application-override-back-arrow-button-in-app-bar-d17e0a3d41f
 class Ruleta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

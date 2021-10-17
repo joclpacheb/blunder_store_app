@@ -145,7 +145,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(25),
-                        child: Text('Destacados',
+                        child: Text('Ropa',
                             style: TextStyle(
                                 color: fondoDark,
                                 fontSize: 25,
@@ -174,7 +174,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: cards.length,
                         itemBuilder: (BuildContext context, int index) => Card(
-                          color: Colors.amber,
+                          color: moradoBlunder,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
