@@ -6,7 +6,7 @@ class BlunderItemCard extends StatelessWidget {
   String nombre = "";
   String imagen =
       ""; //la imagen deberá ser especificada por su nombre sin extensión, debe ser formato png y estar en la carpeta /images
-  int precio = 0;
+  double precio = 0;
 
   BlunderItemCard({
     Key? key,
@@ -39,7 +39,7 @@ class BlunderItemCard extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(1),
                     child: Expanded(
-                      child: Image.asset("assets/images/$imagen.png"),
+                      child: imagen != 'zapato' ? Image.network(imagen) : Image.asset("assets/images/$imagen.png"),
                       flex: 2,
                     ),
                   ),

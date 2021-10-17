@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:js';
+
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/screens/how_to_win_points.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,10 +10,16 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:blunder_store_app/widgets/blunder_item_card.dart';
+import 'package:blunder_store_app/api.dart';
 
-void main() => runApp(Canjeo());
+void main() {
+  runApp(Canjeo());
+}
+
 
 class Canjeo extends StatelessWidget {
+  final Future<List<Product>> products = getProducts();
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -139,23 +147,39 @@ class Canjeo extends StatelessWidget {
                       return Padding(
                         padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
                         child: Container(
-                          child: ListView.builder(
-                            //el list view debería ser alimentado por la API
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              if (index == 0) {}
-                              return Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: BlunderItemCard(
-                                      imagen: 'zapato',
-                                      nombre: 'Zapato Blunder',
-                                      precio: 1500,
-                                    ),
-                                  ),
-                                ],
-                              );
+                          child: FutureBuilder<List<Product>>(
+                            future: products,
+                            builder: (context, snapshot){
+                              if(snapshot.hasData){
+                                print('++++++++++++++++++++++++++++++++++++++++++++++++');
+                                print(snapshot.data);
+                                print(snapshot.data!.length);
+                                print('++++++++++++++++++++++++++++++++++++++++++++++++');
+                                return ListView.builder(
+                                    //el list view debería ser alimentado por la API
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                      if (index == 0) {}
+                                      return Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: BlunderItemCard(
+                                              imagen: snapshot.data![index].pictures.length != 0  ? snapshot.data![index].pictures[0] : 'zapato',
+                                              nombre: snapshot.data![index].name,
+                                              precio: snapshot.data![index].price,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                              }
+                              else if (snapshot.hasError){
+                                print(snapshot.error);
+                                return Center(child: Text('errror'));
+                              }
+                              return Center(child: CircularProgressIndicator());
                             },
                           ),
                           decoration: BoxDecoration(
@@ -176,3 +200,5 @@ class Canjeo extends StatelessWidget {
     );
   }
 }
+
+
