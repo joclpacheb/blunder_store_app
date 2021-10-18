@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/api.dart';
+import 'package:blunder_store_app/screens/snackbar.dart';
+import 'package:blunder_store_app/screens/login.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -22,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final phoneController = TextEditingController();
   final userTypeController = TextEditingController();
   final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
   late Future<bool> value;
 
   Widget buildEmailTF(controller) {
@@ -246,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildRegisterBtn() {
+  Widget _buildRegisterBtn(context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.0),
       width: 200,
@@ -258,30 +261,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
               nameController.text != "" &&
               lastNameController.text != "" &&
               passwordController.text != "" &&
-              userTypeController.text != "")
+              passwordConfirmController.text != "")
             {
-              value = createUser(
+              if(passwordConfirmController.text == passwordController.text)
+                  createUser(
                   emailController.text,
                   phoneController.text,
                   nameController.text,
                   lastNameController.text,
-                  passwordController.text,
-                  userTypeController.text),
-              FutureBuilder(
-                  future: value,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      print("creado");
-                      return Text("creado");
-                    } else if (snapshot.hasError) {
-                      print("error");
-                      return Text("error");
-                    }
-                    return Text("funciona");
-                  })
+                  passwordController.text).then((value) => {
+                  if(value){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return LoginScreen();
+                      }),
+                    ),
+                  }else {
+                    showMessage("Ocurrio un error al momento de crear el usuario", context),
+                  }
+                })
+              else
+                showMessage("Las contraseñas no coinciden", context),
             }
           else
-            print("jdklasfjkdsjfkl")
+            showMessage("Falta algun campo por completar", context),
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -394,13 +398,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         buildEmailTF(emailController),
                         _buildEntryTF("Escribe tu Teléfono", phoneController),
                         _buildPasswordTF(passwordController),
-                        _buildConfirmPasswordTF(passwordController),
-                        _buildRegisterBtn(),
+                        _buildConfirmPasswordTF(passwordConfirmController), 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _buildForgotPasswordBtn(context),
-                            _buildLoginBtn(context),
+                            _buildRegisterBtn(context),
                           ],
                         ),
 
