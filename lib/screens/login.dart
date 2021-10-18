@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/screens/main_shop.dart';
 import 'package:blunder_store_app/screens/register.dart';
-
+import 'package:blunder_store_app/screens/snackbar.dart';
+import 'package:blunder_store_app/api.dart';
 import 'forgot_password.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,9 +18,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getToken().then((value) => {
+      if(value != ""){
+        print(value),
+        token =value,
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return MainShop();
+          }),
+        ),
+      }
+    });
+    
+  }
   bool _rememberMe = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  late Future<bool> value;
 
-  Widget buildEmailTF() {
+  Widget buildEmailTF(controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -30,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            controller: controller,
             keyboardType: TextInputType.emailAddress,
             style: const TextStyle(
               color: Color(0xFFB8B8B8),
@@ -74,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildPasswordTF() {
+  Widget _buildPasswordTF(controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -88,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
+            controller: controller,
             obscureText: true,
             style: TextStyle(
               color: Color(0xFFB8B8B8),
@@ -173,14 +199,25 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () => {
-          print('Login Button Pressed'),
-          //aqui va la validación con la API para el login
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return MainShop();
-            }),
-          ),
+          
+          if (emailController.text != "" &&
+              passwordController.text != "")
+            {
+              auth(emailController.text, passwordController.text).then((value) => {
+                if(value){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return MainShop();
+                      }),
+                    ),
+                }else {
+                  showMessage("El correo o el la contraseña no son correctos", context),
+                }
+              }),    
+          }
+          else
+            showMessage("Falta por llenar el correo o la contraseña", context),
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -313,11 +350,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: 5.0),
-                        buildEmailTF(),
+                        buildEmailTF(emailController),
                         SizedBox(
                           height: 10.0,
                         ),
-                        _buildPasswordTF(),
+                        _buildPasswordTF(passwordController),
                         SizedBox(
                           height: 15.0,
                         ),
