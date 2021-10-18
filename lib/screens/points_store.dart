@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:js';
+//import 'dart:js';
 
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/screens/how_to_win_points.dart';
@@ -16,10 +16,9 @@ void main() {
   runApp(Canjeo());
 }
 
-
 class Canjeo extends StatelessWidget {
   final Future<List<Product>> products = getProducts();
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -149,30 +148,35 @@ class Canjeo extends StatelessWidget {
                         child: Container(
                           child: FutureBuilder<List<Product>>(
                             future: products,
-                            builder: (context, snapshot){
-                              if(snapshot.hasData){
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
                                 return ListView.builder(
-                                    //el list view debería ser alimentado por la API
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      if (index == 0) {}
-                                      return Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: BlunderItemCard(
-                                              imagen: snapshot.data![index].pictures.length != 0  ? snapshot.data![index].pictures[0] : 'zapato',
-                                              nombre: snapshot.data![index].name,
-                                              precio: snapshot.data![index].price,
-                                            ),
+                                  //el list view debería ser alimentado por la API
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    if (index == 0) {}
+                                    return Column(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: BlunderItemCard(
+                                            imagen: snapshot.data![index]
+                                                        .pictures.length !=
+                                                    0
+                                                ? snapshot
+                                                    .data![index].pictures[0]
+                                                : 'zapato',
+                                            nombre: snapshot.data![index].name,
+                                            precio: snapshot.data![index].price,
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                              }
-                              else if (snapshot.hasError){
-                                return Center(child: Text(snapshot.error.toString()));
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                    child: Text(snapshot.error.toString()));
                               }
                               return Center(child: CircularProgressIndicator());
                             },
@@ -195,5 +199,3 @@ class Canjeo extends StatelessWidget {
     );
   }
 }
-
-
