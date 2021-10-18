@@ -156,7 +156,7 @@ class _RuletaState extends State<RuletaW> with SingleTickerProviderStateMixin {
                   child: Row(
                     children: [
                       Text(
-                        "Resultado:",
+                        "Resultado:   ",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20.0,

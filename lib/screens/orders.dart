@@ -74,7 +74,7 @@ class Orders extends StatelessWidget {
                                               color: Colors.grey, width: 0.5))),
                                   child: TabBarView(children: <Widget>[
                                     Center(
-                                      child: Text('Pendientes',
+                                      child: Text('Pedidosndientes',
                                           style: TextStyle(
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold)),
