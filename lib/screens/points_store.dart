@@ -167,7 +167,7 @@ class Canjeo extends StatelessWidget {
                                                     .data![index].pictures[0]
                                                 : 'zapato',
                                             nombre: snapshot.data![index].name,
-                                            precio: snapshot.data![index].price,
+                                            precio: snapshot.data![index].price.toDouble(),
                                           ),
                                         ),
                                       ],
