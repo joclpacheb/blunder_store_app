@@ -79,7 +79,9 @@ class BlunderItemCard extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(20.0))),
                                 onPressed: () {
-                                  showAlertDialog(context);
+                                  AlertYesNo(
+                                    pregunta: "¿Desea comprar este producto?",
+                                  ).showAlertDialog(context);
                                 },
                                 icon: Image.asset(
                                   'assets/images/diamond.png',

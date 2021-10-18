@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/widgets/alert_dialog_yesno.dart';
@@ -81,7 +83,9 @@ class BlunderCartCard extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(20.0))),
                                 onPressed: () {
-                                  showAlertDialog(context);
+                                  AlertYesNo(
+                                    pregunta: "¿Desea comprar este producto?",
+                                  ).showAlertDialog(context);
                                 },
                                 icon: Icon(Icons.attach_money),
                                 label: Text(

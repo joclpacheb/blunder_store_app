@@ -1,14 +1,36 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:blunder_store_app/constants.dart';
+import 'package:blunder_store_app/screens/edit_profile.dart';
+import 'package:blunder_store_app/screens/points_store.dart';
+import 'package:blunder_store_app/widgets/alert_dialog_yesno.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:blunder_store_app/widgets/blunder_points_card.dart';
-
+import 'package:flutter/services.dart';
 import 'how_to_win_points.dart';
+
+class SubCardItem {
+  String productImg;
+  String productName;
+  double productPrice;
+
+  SubCardItem(
+      {required this.productImg,
+      required this.productName,
+      required this.productPrice});
+}
+
+class CuponItemCard {
+  String codigo = "CPN-20";
+
+// porcentaje=codigo.substring(3);
+//var newString = string.substring(string.length - 5);
+
+  CuponItemCard({required this.codigo});
+}
 
 void main() => runApp(UserProfile());
 
@@ -35,7 +57,11 @@ class UserProfile extends StatelessWidget {
                 Icons.exit_to_app,
                 color: Colors.white,
               ),
-              onPressed: () => Navigator.of(context).pop(false),
+              onPressed: () => {
+                AlertYesNo(
+                  pregunta: "¿Desea cerrar la sesión?",
+                ).showAlertDialog(context)
+              },
             ),
           ],
           title: Row(
@@ -63,7 +89,12 @@ class UserProfile extends StatelessWidget {
                       Icons.edit,
                       color: Colors.white,
                     ),
-                    onPressed: () => Navigator.of(context).pop(false),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return editProfile();
+                      }),
+                    ),
                   ),
                 ),
               ),
@@ -72,7 +103,7 @@ class UserProfile extends StatelessWidget {
         ),
         body: Stack(children: [
           Container(
-            height: 210,
+            height: 200,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -203,7 +234,7 @@ class UserProfile extends StatelessWidget {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -245,19 +276,25 @@ class UserProfile extends StatelessWidget {
                                 ],
                               ),
                               Divider(
-                                height: 70,
+                                height: 40,
                                 thickness: 20,
-                                indent: 50,
-                                endIndent: 70,
+                                indent: 40,
+                                endIndent: 30,
                               ),
                               Row(
                                 children: [
-                                  Ink(
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: primaryGreen,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                     child: IconButton(
-                                      icon: Icon(Icons.info),
-                                      color: blancoBlunder,
-                                      iconSize: 20,
-                                      splashRadius: 40,
+                                      icon: Icon(
+                                        Icons.info,
+                                        color: blancoBlunder,
+                                      ),
+                                      iconSize: 22,
+                                      splashRadius: 70,
                                       disabledColor: blancoBlunder,
                                       onPressed: () {
                                         Navigator.push(
@@ -269,12 +306,31 @@ class UserProfile extends StatelessWidget {
                                       },
                                       tooltip: "¿Cómo obtener puntos?",
                                     ),
-                                    decoration: ShapeDecoration(
-                                        color: primaryGreen,
-                                        shape: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: primaryGreen, width: 5.0),
-                                        )),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: primaryGreen,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.storefront,
+                                        color: blancoBlunder,
+                                      ),
+                                      iconSize: 22,
+                                      splashRadius: 70,
+                                      disabledColor: blancoBlunder,
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return Canjeo();
+                                          }),
+                                        );
+                                      },
+                                      tooltip: "Canjea tus Puntos",
+                                    ),
                                   )
                                 ],
                               ),
@@ -284,34 +340,14 @@ class UserProfile extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        BlunderPointsCard(
-                          titulo: "Gira la Ruleta del Merodeador:",
-                          texto:
-                              "¡Prueba tu suerte! Lanzar la Ruleta del Merodeador te asegura ganarte un espectacular premio, y entre ellos, podrás ganar muchísimos puntos de lealtad.",
+                        ExchangesCard(
+                          titulo: "Canjes Realizados",
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        BlunderPointsCard(
-                          titulo: "Compra en nuestra tienda:",
-                          texto:
-                              "Demuestranos tu lealtad al comprar productos, cualquier compra de 2 o más productos te otorgará puntos de lealtad. Gana 30 puntos por comprar 2 productos, y 5 puntos adicionales por cada producto extra que compres.",
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        BlunderPointsCard(
-                          titulo: "Calificar productos:",
-                          texto:
-                              " ¿Te gustó tu producto? ¡A nosotros nos gusta saber tu opinión! Califica tus compras de 1 a 5 estrellas y gana puntos de lealtad por hacerlo. Gana 10 puntos por cada calificación.",
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        BlunderPointsCard(
-                          titulo: "Reseñar productos:",
-                          texto:
-                              "Reseñar productos: En Blunderstore nos encanta saber tus historias, así que asegúrate de contarnos en una reseña de mínimo 200 caracteres qué es lo que más te gusta de los productos que compraste, ¡y obtén puntos por hacerlo! Gana 50 puntos de lealtad por reseñar un producto.",
+                        CouponsCard(
+                          titulo: "Cupones Obtenidos",
                         ),
                         const SizedBox(
                           height: 20,
@@ -329,6 +365,398 @@ class UserProfile extends StatelessWidget {
                 );
               }),
         ]),
+      ),
+    );
+  }
+}
+//======================================================================================================
+// Widgets de Canjes
+//======================================================================================================
+
+class ExchangesCard extends StatelessWidget {
+  String titulo = "";
+  List<SubCardItem> cards = [
+    SubCardItem(
+        productImg: "assets/images/zapato.png",
+        productPrice: 200.0,
+        productName: "Zapato Blunder"),
+    SubCardItem(
+        productImg: "assets/images/ps4_console_white_1.png",
+        productPrice: 100.0,
+        productName: "Control PS4"),
+    SubCardItem(
+        productImg: "assets/images/wireless headset.png",
+        productPrice: 70.0,
+        productName: "Audifonos"),
+  ];
+
+  ExchangesCard({
+    Key? key,
+    required this.titulo,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+      Container(
+        width: 370.0,
+        decoration: BoxDecoration(
+          color: azulBlunder,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.0),
+          ),
+        ),
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Text(
+                titulo,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    color: fondoDark,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: cards.length,
+              itemBuilder: (BuildContext context, int index) => Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: CanjesSubCard(
+                  nombre: cards[index].productName,
+                  precio: cards[index].productPrice,
+                  imagen: cards[index].productImg,
+                ),
+              ),
+            ),
+            //los llamados a los items parametros de la lista cards se hacen asi => cards[index].productImg,
+          ],
+        ),
+      )
+    ]);
+  }
+}
+
+class CanjesSubCard extends StatelessWidget {
+  String nombre = "";
+  String imagen =
+      ""; //la imagen deberá ser especificada por su nombre sin extensión, debe ser formato png y estar en la carpeta /images
+  double precio = 0;
+  CanjesSubCard({
+    Key? key,
+    required this.nombre,
+    required this.imagen,
+    required this.precio,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 49,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 300,
+            height: 49,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            padding: const EdgeInsets.only(
+              left: 5,
+              right: 10,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(imagen),
+                      fit: BoxFit.fitWidth,
+                    ),
+                    shape: BoxShape.circle,
+                    color: Color(0xffc4c4c4),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  nombre,
+                  style: TextStyle(
+                    color: Color(0xff313131),
+                    fontSize: 17,
+                  ),
+                ),
+                SizedBox(width: 20),
+                Container(
+                  width: 26,
+                  height: 26,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Image.asset(
+                    'assets/images/diamond.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                SizedBox(width: 5),
+                Text(
+                  precio.toString(),
+                  style: TextStyle(
+                    color: fondoDark,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//======================================================================================================
+// Widgets de Cupones
+//======================================================================================================
+class CouponsCard extends StatelessWidget {
+  String titulo = "";
+  List<CuponItemCard> cupones = [
+    CuponItemCard(
+      codigo: "CPN-10",
+    ),
+    CuponItemCard(
+      codigo: "CPN-80",
+    ),
+    CuponItemCard(
+      codigo: "CPN-70",
+    ),
+  ];
+  CouponsCard({
+    Key? key,
+    required this.titulo,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+      Container(
+        width: 370.0,
+        decoration: BoxDecoration(
+          color: terracotaBlunder,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.0),
+          ),
+        ),
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Text(
+                titulo,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    color: fondoDark,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: cupones.length,
+              itemBuilder: (BuildContext context, int index) => Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: CuponSubCard(
+                  codigo: cupones[index].codigo,
+                  porcentaje: cupones[index]
+                          .codigo
+                          .substring(4, cupones[index].codigo.length) +
+                      '%', //se crea un substring a partir del caracter 4: (C)(P)(N)(-)..... Hasta la longitud
+                ),
+              ),
+            )
+
+            // CuponSubCard(
+            //   //aqui deberia consumir la api y traerse los parámetros de los canjes realizados
+            //   codigo: 'CPN-25',
+            //   porcentaje: '25' + ' %',
+            // ),
+          ],
+        ),
+      )
+    ]);
+  }
+}
+
+class CuponSubCard extends StatelessWidget {
+  String codigo = "";
+  String porcentaje = "";
+  CuponSubCard({
+    Key? key,
+    required this.codigo,
+    required this.porcentaje,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 49,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 272,
+            height: 49,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 272,
+                  height: 49,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 9,
+                    top: 4,
+                    bottom: 5,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.confirmation_number,
+                        color: fondoDark,
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        codigo,
+                        style: TextStyle(
+                          color: Color(0xff313131),
+                          fontSize: 17,
+                        ),
+                      ),
+                      SizedBox(width: 28.67),
+                      Text(
+                        porcentaje,
+                        style: TextStyle(
+                          color: Color(0xff313131),
+                          fontSize: 17,
+                          fontFamily: "Roboto",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(width: 28.67),
+                      Container(
+                        width: 47,
+                        height: 40,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 47,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color(0xff009c8a),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: "Roboto",
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: IconButton(
+                                      tooltip: "Copiar al Portapapeles",
+                                      onPressed: () {
+                                        Clipboard.setData(
+                                            ClipboardData(text: codigo));
+                                        final snackBar = SnackBar(
+                                          backgroundColor: primaryGreen,
+                                          content:
+                                              Text("Copiado al Portapapeles"),
+                                          action: SnackBarAction(
+                                            textColor: Colors.white,
+                                            label: 'Cerrar',
+                                            onPressed: () {},
+                                          ),
+                                        );
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      },
+                                      icon: Icon(
+                                        Icons.copy,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

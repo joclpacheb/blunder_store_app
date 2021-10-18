@@ -1,12 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
 
 import 'package:blunder_store_app/widgets/blunder_points_card.dart';
 import 'package:blunder_store_app/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/widgets/search_bar.dart';
-
-import 'package:flutter/material.dart';
 
 class CardItem {
   String productImg;

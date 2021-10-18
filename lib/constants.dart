@@ -86,3 +86,5 @@ const fondoDark = Color(0xFF313131);
 const primaryGreen = Color(0xFF009c8a);
 const moradoBlunder = Color(0xFF693c72);
 const rojoBlunder = Color(0xFFcf3568);
+const azulBlunder = Color(0xFF52aedd);
+const terracotaBlunder = Color(0xFFe26c5e);
