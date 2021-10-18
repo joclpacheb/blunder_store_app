@@ -96,12 +96,12 @@ class _editProfileState extends State<editProfile> {
               userTypeController.text != "")
             {
               value = createUser(
-                  emailController.text,
-                  phoneController.text,
-                  nameController.text,
-                  lastNameController.text,
-                  passwordController.text,
-                  userTypeController.text),
+                emailController.text,
+                phoneController.text,
+                nameController.text,
+                lastNameController.text,
+                passwordController.text,
+              ),
               FutureBuilder(
                   future: value,
                   builder: (context, snapshot) {

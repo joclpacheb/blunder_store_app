@@ -97,12 +97,12 @@ class _forgotScreenState extends State<forgotScreen> {
               userTypeController.text != "")
             {
               value = createUser(
-                  emailController.text,
-                  phoneController.text,
-                  nameController.text,
-                  lastNameController.text,
-                  passwordController.text,
-                  userTypeController.text),
+                emailController.text,
+                phoneController.text,
+                nameController.text,
+                lastNameController.text,
+                passwordController.text,
+              ),
               FutureBuilder(
                   future: value,
                   builder: (context, snapshot) {
