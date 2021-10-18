@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
@@ -10,7 +8,6 @@ import 'package:blunder_store_app/screens/register.dart';
 import 'package:blunder_store_app/screens/snackbar.dart';
 import 'package:blunder_store_app/api.dart';
 import 'forgot_password.dart';
-
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,19 +18,22 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    print(
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     getToken().then((value) => {
-      if(value != ""){
-        token =value,
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return MainShop();
-          }),
-        ),
-      }
-    });
+          if (value != "")
+            {
+              token = value,
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return MainShop();
+                }),
+              ),
+            }
+        });
   }
+
   bool _rememberMe = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -198,23 +198,27 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () => {
-          
-          if (emailController.text != "" &&
-              passwordController.text != "")
+          if (emailController.text != "" && passwordController.text != "")
             {
-              auth(emailController.text, passwordController.text).then((value) => {
-                if(value){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return MainShop();
+              auth(emailController.text, passwordController.text)
+                  .then((value) => {
+                        if (value)
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return MainShop();
+                              }),
+                            ),
+                          }
+                        else
+                          {
+                            showMessage(
+                                "El correo o el la contraseña no son correctos",
+                                context),
+                          }
                       }),
-                    ),
-                }else {
-                  showMessage("El correo o el la contraseña no son correctos", context),
-                }
-              }),    
-          }
+            }
           else
             showMessage("Falta por llenar el correo o la contraseña", context),
         },
