@@ -87,7 +87,7 @@ class Product{
           price : json['precio'] as double,
           type : json['tipo'] as String,
           stock : json['stock'] as int,
-          point : json['puntuacion'] ?? 0 as double,
+          point : double.parse(json['puntuacion'] ?? 0.0),
           productBlunder : json['producto_blunder'] as bool,
           status : json['estatus'] as bool,
           pictures : json['fotos'] as List<dynamic>

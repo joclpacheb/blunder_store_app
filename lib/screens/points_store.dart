@@ -160,14 +160,10 @@ class Canjeo extends StatelessWidget {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: BlunderItemCard(
-                                            imagen: snapshot.data![index]
-                                                        .pictures.length !=
-                                                    0
-                                                ? snapshot
-                                                    .data![index].pictures[0]
+                                            imagen: snapshot.data![index].pictures.length != 0 ? snapshot.data![index].pictures[0]
                                                 : 'zapato',
                                             nombre: snapshot.data![index].name,
-                                            precio: double.parse(snapshot.data![index].price.toString()),
+                                            precio: snapshot.data![index].point,
                                           ),
                                         ),
                                       ],
