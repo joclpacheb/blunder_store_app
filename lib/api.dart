@@ -11,13 +11,15 @@ Map<String, String>  headers = {
       'Authorization': 'Bearer $token',
     };
 
+late Map<String, dynamic>  user;
+
 Future<bool> setToken(String value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.setString('token', value);
 }
-Future<bool> setId(String value) async {
+Future<bool> setUser(String value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.setString('id', value);
+  return prefs.setString('user', value);
 }
 
 Future<String> getToken() async {
@@ -26,10 +28,10 @@ Future<String> getToken() async {
   return token ?? "";
 }
 
-Future<String> getUserId() async {
+Future<Map<String, dynamic>> getUser() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('id');
-  return token ?? "";
+  Map<String, dynamic>? user = convert.jsonDecode(prefs.getString('user') ?? "{}");
+  return user ?? {};
 }
 
 Future<bool> createUser(String email, String phone,
@@ -151,7 +153,9 @@ Future<bool> auth(String email, String password) async{
       var value = convert.jsonDecode(response.body);
       token = value['data']['token'];
       setToken(value['data']['token']);
-      setId(value['data']['id']);
+      var url2 = Uri.parse(urlBase + "usuarios/"+ value['data']['id']);
+      var response2 = await http.get(url2, headers: headers);
+      setUser(response2.body);
       return true;
     }
     else

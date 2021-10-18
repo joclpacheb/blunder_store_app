@@ -21,9 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     getToken().then((value) => {
       if(value != ""){
-        print(value),
         token =value,
         Navigator.push(
           context,
@@ -33,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       }
     });
-    
   }
   bool _rememberMe = false;
   final emailController = TextEditingController();

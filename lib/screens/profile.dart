@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'how_to_win_points.dart';
+import 'package:blunder_store_app/api.dart';
 
 class SubCardItem {
   String productImg;
@@ -32,7 +33,13 @@ class CuponItemCard {
   CuponItemCard({required this.codigo});
 }
 
-void main() => runApp(UserProfile());
+void main() => {
+  getUser().then((value) => {
+      if(value != {})
+        user = value,
+    }),
+  runApp(UserProfile())
+};
 
 class UserProfile extends StatelessWidget {
   @override
@@ -120,100 +127,112 @@ class UserProfile extends StatelessWidget {
                     ),
                     color: primaryGreen,
                   ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 80,
-                              height: 80,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xffc4c4c4),
-                                    ),
-                                  ),
-                                  Positioned.fill(
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        width: 60,
-                                        height: 60,
-                                        child: Image.asset(
-                                            'assets/images/smile.png'),
+                  child: FutureBuilder<Map<String, dynamic>>(
+                      future: getUser(),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            width: 80,
+                                            height: 80,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xffc4c4c4),
+                                            ),
+                                          ),
+                                          Positioned.fill(
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Container(
+                                                width: 60,
+                                                height: 60,
+                                                child: Image.asset(
+                                                    'assets/images/smile.png'),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "John Doe",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w500,
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      user['data']['nombres'] + " " + user['data']['apellidos'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "johndoe@gmail.com",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w500,
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      user['data']['correo'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "+584145134870",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w500,
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      user['data']['telefono'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontFamily: "Roboto",
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                            ],
+                          );
+                        }
+                        else if (snapshot.hasError){
+                          print(snapshot.error);
+                          return Center(child: Text('errror'));
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    ),
                 ),
               ],
             ),
@@ -263,13 +282,25 @@ class UserProfile extends StatelessWidget {
                                               'assets/images/diamond.png'),
                                           onPressed: () {},
                                         ),
-                                        Text(
-                                          "1025",
-                                          style: TextStyle(
-                                              fontSize: 25.0,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        )
+                                        FutureBuilder<Map<String, dynamic>>(
+                                          future: getUser(),
+                                          builder: (context, snapshot){
+                                            if(snapshot.hasData){
+                                              return Text(
+                                                user['data']['puntos'].toString(),
+                                                style: TextStyle(
+                                                fontSize: 20.0,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                              );
+                                            }
+                                            else if (snapshot.hasError){
+                                              print(snapshot.error);
+                                              return Center(child: Text('errror'));
+                                            }
+                                            return Center(child: CircularProgressIndicator());
+                                          }
+                                        ),
                                       ],
                                     ),
                                   ),

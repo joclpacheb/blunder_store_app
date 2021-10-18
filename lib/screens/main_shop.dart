@@ -10,6 +10,7 @@ import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/screens/shop.dart';
 import 'package:blunder_store_app/screens/orders.dart';
 import 'package:blunder_store_app/screens/gamified_store.dart';
+import 'package:blunder_store_app/api.dart';
 
 class MainShop extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class MainShop extends StatefulWidget {
 }
 
 class _MainShopState extends State<MainShop> {
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,6 +42,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _paginaActual = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getToken().then((value) => {
+      if(value != "")
+        token = value,
+    });
+    getUser().then((value) => {
+      if(value != {})
+        user = value,
+    });
+  }
 
   List<Widget> _paginas = [
     ShopScreen(
@@ -89,13 +104,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Image.asset('assets/images/diamond.png'),
                       onPressed: () {},
                     ),
-                    Text(
-                      "1025",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    )
+
+                    FutureBuilder<Map<String, dynamic>>(
+                      future: getUser(),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          return Text(
+                            user['data']['puntos'].toString(),
+                            style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                          );
+                        }
+                        else if (snapshot.hasError){
+                          print(snapshot.error);
+                          return Center(child: Text('errror'));
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    ) 
                   ],
                 ),
                 Divider(
