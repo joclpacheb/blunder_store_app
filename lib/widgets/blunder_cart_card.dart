@@ -4,6 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/widgets/alert_dialog_yesno.dart';
 
+class CustomStepper extends StatefulWidget {
+  CustomStepper({
+    required this.lowerLimit,
+    required this.upperLimit,
+    required this.stepValue,
+    required this.iconSize,
+    required this.value,
+  });
+
+  final int lowerLimit;
+  final int upperLimit;
+  final int stepValue;
+  final double iconSize;
+  int value;
+
+  @override
+  _CustomStepperState createState() => _CustomStepperState();
+}
+
 class BlunderCartCard extends StatelessWidget {
   String nombre = "";
   String imagen =
@@ -24,7 +43,7 @@ class BlunderCartCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          height: 140.0,
+          height: 160.0,
           width: 370.0,
           decoration: BoxDecoration(
             color: moradoBlunder,
@@ -38,34 +57,32 @@ class BlunderCartCard extends StatelessWidget {
             color: moradoBlunder,
             child: Row(
               children: [
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(1),
-                    child: Expanded(
-                      child: Image.asset("assets/images/$imagen.png"),
-                      flex: 2,
-                    ),
-                  ),
+                Flexible(
+                  child: Image.asset("assets/images/$imagen.png"),
+                  flex: 5,
                 ),
-                Expanded(
+                Flexible(
                   child: Container(
                     alignment: Alignment.topLeft,
                     child: Column(
                       children: [
-                        Expanded(
+                        Flexible(
                           flex: 5,
                           child: ListTile(
-                            title: Text(
-                              nombre,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
+                            title: Padding(
+                              padding: const EdgeInsets.only(bottom: 16.0),
+                              child: Text(
+                                nombre,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        Expanded(
+                        Flexible(
                           flex: 6,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -76,7 +93,7 @@ class BlunderCartCard extends StatelessWidget {
                               OutlinedButton.icon(
                                 style: OutlinedButton.styleFrom(
                                     primary: fondoDark,
-                                    padding: EdgeInsets.all(20),
+                                    padding: EdgeInsets.all(15),
                                     side: BorderSide(
                                         width: 2.0, color: Colors.white),
                                     shape: RoundedRectangleBorder(
@@ -87,21 +104,26 @@ class BlunderCartCard extends StatelessWidget {
                                     pregunta: "¿Desea comprar este producto?",
                                   ).showAlertDialog(context);
                                 },
-                                icon: Icon(Icons.attach_money),
+                                icon: Icon(Icons.attach_money,
+                                    color: Colors.white),
                                 label: Text(
                                   precio.toString(),
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              SizedBox(
-                                width: 8,
-                              )
                             ],
                           ),
-                        )
+                        ),
+                        CustomStepper(
+                          iconSize: 25,
+                          lowerLimit: 1,
+                          stepValue: 1,
+                          upperLimit: 999,
+                          value: 1,
+                        ),
                       ],
                     ),
                   ),
@@ -112,6 +134,80 @@ class BlunderCartCard extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _CustomStepperState extends State<CustomStepper> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        RoundedIconButton(
+          icon: Icons.remove,
+          iconSize: widget.iconSize,
+          onPress: () {
+            setState(() {
+              widget.value = widget.value == widget.lowerLimit
+                  ? widget.lowerLimit
+                  : widget.value -= widget.stepValue;
+            });
+          },
+        ),
+        Container(
+          width: widget.iconSize,
+          child: Text(
+            '${widget.value}',
+            style: TextStyle(
+              fontSize: widget.iconSize * 0.8,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        RoundedIconButton(
+          icon: Icons.add,
+          iconSize: widget.iconSize,
+          onPress: () {
+            setState(() {
+              widget.value = widget.value == widget.upperLimit
+                  ? widget.upperLimit
+                  : widget.value += widget.stepValue;
+            });
+          },
+        ),
+        Icon(
+          Icons.delete,
+          color: Colors.grey[300],
+        ),
+      ],
+    );
+  }
+}
+
+class RoundedIconButton extends StatelessWidget {
+  RoundedIconButton(
+      {required this.icon, required this.onPress, required this.iconSize});
+
+  final IconData icon;
+  final Function onPress;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      constraints: BoxConstraints.tightFor(width: iconSize, height: iconSize),
+      elevation: 6.0,
+      onPressed: null,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(iconSize * 0.2)),
+      fillColor: Colors.grey[300],
+      child: Icon(
+        icon,
+        color: fondoDark,
+        size: iconSize * 0.8,
+      ),
     );
   }
 }

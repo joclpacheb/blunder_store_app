@@ -56,6 +56,102 @@ class CartScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 10.0, 0.0, 0.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Subtotal: ",
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            color: primaryGreen,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                      Text(
+                                        "1025",
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            color: fondoDark,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Icon(
+                                        Icons.attach_money_rounded,
+                                        color: fondoDark,
+                                        size: 25.0,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(top: 8),
+                                        width: 150,
+                                        //color: Colors.blue,
+                                        child: TextFormField(
+                                          decoration: new InputDecoration(
+                                            hintText: '  Código de Cupón',
+                                            contentPadding: EdgeInsets.fromLTRB(
+                                                0.0, 8, 8, 8),
+                                            isDense: false,
+                                            border: new OutlineInputBorder(
+                                                borderSide: new BorderSide(
+                                                    color: fondoDark)),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5.0, 8, 0, 0),
+                                            child: ElevatedButton(
+                                              onPressed: () {},
+                                              style: ElevatedButton.styleFrom(
+                                                  fixedSize:
+                                                      const Size(150, 45),
+                                                  primary: Colors.blue[300]),
+                                              child: Text("APLICAR"),
+                                            ),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5.0, 8, 0, 0),
+                                        child: Ink(
+                                          child: IconButton(
+                                            icon: Icon(
+                                                Icons.delete_forever_sharp),
+                                            color: blancoBlunder,
+                                            iconSize: 25,
+                                            splashRadius: 30,
+                                            disabledColor: blancoBlunder,
+                                            onPressed: () {
+                                              AlertYesNo(
+                                                pregunta:
+                                                    "¿Desea eliminar todo del carrito?",
+                                              ).showAlertDialog(context);
+                                            },
+                                            tooltip:
+                                                "Eliminar todo del Carrito",
+                                          ),
+                                          decoration: ShapeDecoration(
+                                              color: rojoBlunder,
+                                              shape: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: rojoBlunder,
+                                                    width: 2.0),
+                                              )),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -64,7 +160,7 @@ class CartScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
+            Flexible(
               flex: 3,
               child: Stack(children: [
                 DraggableScrollableSheet(
