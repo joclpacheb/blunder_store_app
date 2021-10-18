@@ -151,10 +151,6 @@ class Canjeo extends StatelessWidget {
                             future: products,
                             builder: (context, snapshot){
                               if(snapshot.hasData){
-                                print('++++++++++++++++++++++++++++++++++++++++++++++++');
-                                print(snapshot.data);
-                                print(snapshot.data!.length);
-                                print('++++++++++++++++++++++++++++++++++++++++++++++++');
                                 return ListView.builder(
                                     //el list view debería ser alimentado por la API
                                     itemCount: snapshot.data!.length,
@@ -176,8 +172,7 @@ class Canjeo extends StatelessWidget {
                                   );
                               }
                               else if (snapshot.hasError){
-                                print(snapshot.error);
-                                return Center(child: Text('errror'));
+                                return Center(child: Text(snapshot.error.toString()));
                               }
                               return Center(child: CircularProgressIndicator());
                             },
