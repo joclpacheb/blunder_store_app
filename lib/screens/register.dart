@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
-import 'dart:html';
-import 'dart:js';
 
 import 'package:blunder_store_app/screens/forgot_password.dart';
 import 'package:blunder_store_app/screens/login.dart';
@@ -9,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:blunder_store_app/constants.dart';
 import 'package:blunder_store_app/api.dart';
 import 'package:blunder_store_app/screens/snackbar.dart';
-import 'package:blunder_store_app/screens/login.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -263,24 +260,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
               passwordController.text != "" &&
               passwordConfirmController.text != "")
             {
-              if(passwordConfirmController.text == passwordController.text)
-                  createUser(
-                  emailController.text,
-                  phoneController.text,
-                  nameController.text,
-                  lastNameController.text,
-                  passwordController.text).then((value) => {
-                  if(value){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return LoginScreen();
-                      }),
-                    ),
-                  }else {
-                    showMessage("Ocurrio un error al momento de crear el usuario", context),
-                  }
-                })
+              if (passwordConfirmController.text == passwordController.text)
+                createUser(
+                        emailController.text,
+                        phoneController.text,
+                        nameController.text,
+                        lastNameController.text,
+                        passwordController.text)
+                    .then((value) => {
+                          if (value)
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return LoginScreen();
+                                }),
+                              ),
+                            }
+                          else
+                            {
+                              showMessage(
+                                  "Ocurrio un error al momento de crear el usuario",
+                                  context),
+                            }
+                        })
               else
                 showMessage("Las contraseñas no coinciden", context),
             }
@@ -398,11 +401,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         buildEmailTF(emailController),
                         _buildEntryTF("Escribe tu Teléfono", phoneController),
                         _buildPasswordTF(passwordController),
-                        _buildConfirmPasswordTF(passwordConfirmController), 
+                        _buildConfirmPasswordTF(passwordConfirmController),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             _buildRegisterBtn(context),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildLoginBtn(context),
                           ],
                         ),
 
@@ -479,7 +488,7 @@ Widget _buildLoginBtn(context) {
             }),
           ),
         },
-        child: Text('| Iniciar Sesión',
+        child: Text('Iniciar Sesión',
             style: TextStyle(
               color: fondoDark,
               fontWeight: FontWeight.w500,
