@@ -83,13 +83,25 @@ class Canjeo extends StatelessWidget {
                                         'assets/images/diamond.png'),
                                     onPressed: () {},
                                   ),
-                                  Text(
-                                    "1025",
-                                    style: TextStyle(
-                                        fontSize: 25.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  )
+                                  FutureBuilder<Map<String, dynamic>>(
+                                    future: getUser(),
+                                    builder: (context, snapshot){
+                                      if(snapshot.hasData){
+                                        return Text(
+                                          user['data']['puntos'].toString(),
+                                          style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                        );
+                                      }
+                                      else if (snapshot.hasError){
+                                        print(snapshot.error);
+                                        return Center(child: Text('errror'));
+                                      }
+                                      return Center(child: CircularProgressIndicator());
+                                    }
+                                  ),
                                 ],
                               ),
                             ),
